@@ -21,8 +21,25 @@ import {createServer} from 'node:http';
 
 // Create HTTP Server
 const server = createServer(function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-        res.end('<h1>We have an HTTP Server</h1>');
+    console.log(req.url);
+    if (req.url.includes('create')) {
+        // Create file
+        res.writeHead('./hello.html', '<h1>Learning Node.js</h1>', (err) => {
+            console.log(err);
+            // Returnresponse
+            res.writeHead(200, {'Content-Type': 'text/html' });
+            res.end('<h1>File deleted</h1>');
+        });    
+        
+    } else {
+        // Delete file
+        unlink('./hello.html', () => {
+            // Return response
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end('<h1>File deleted</h1>');   
+        });
+    }
+    
 });
 
 
